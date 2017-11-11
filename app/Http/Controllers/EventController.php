@@ -4,7 +4,6 @@ namespace app\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
@@ -20,7 +19,6 @@ class EventController extends Controller
             
         } catch (ValidationException $e) {
             return response()->json($e->response->getContent(), $e->response->getStatusCode());
-            dd($e->response);
         }
         
         $data = DB::collection('events')
@@ -41,13 +39,11 @@ class EventController extends Controller
             
         } catch (ValidationException $e) {
             return response()->json($e->response->getContent(), $e->response->getStatusCode());
-            dd($e->response);
         }
         
         DB::collection('events')->insert(['event' => $request->get('event'), 'timestamp' => $request->get('timestamp')]);
         
         return response()->json(['message' => 'Evento '.$request->get('event').' cadastrado']);    
-        dd(Carbon::createFromTimestampUTC(strtotime($request->get('timestamp'))));
     }
     
     public function search(Request $request) {
@@ -60,7 +56,6 @@ class EventController extends Controller
             
         } catch (ValidationException $e) {
             return response()->json($e->response->getContent(), $e->response->getStatusCode());
-            dd($e->response);
         }
         
         $data = DB::collection('events')
